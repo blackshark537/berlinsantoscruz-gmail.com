@@ -40,8 +40,8 @@ export class GeolocationComponent implements OnInit {
   async ngOnInit() {
 
     this.index =  parseInt(this.activeRoute.snapshot.paramMap.get('id'));
-
-    if (this.index) {
+    
+    if (this.index || this.index > -1) {
       const item = this.store.getOne(this.index);
       this.data = item;
     } else {
@@ -55,7 +55,7 @@ export class GeolocationComponent implements OnInit {
     // leaflet options
     this.options = {
       layers: [
-        tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' })
+        tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' })
       ],
       zoom: 13,
       center: latLng(this.data.latitude, this.data.longitude)

@@ -60,11 +60,17 @@ export class AppComponent implements OnInit {
 
   action(index){
     switch(index){
-      case 1:
+      case 0:
         this.restoreAll();
+        break;
+      case 1:
+        this.removeAll();
         break;
       case 2:
         this.removeAll();
+        break;
+      case 3:
+        window.open('https://github.com/blackshark537/geofence').focus();
         break;
       default:
         break;
@@ -72,10 +78,12 @@ export class AppComponent implements OnInit {
   }
 
   removeAll(){
-    this.store.deleteAll();
+    //this.store.deleteAll();
+    console.log('removeAll');
   }
 
   restoreAll(){
-    this.store.restore();
+    //this.store.restore();
+    console.log('addAll');
   }
 }
