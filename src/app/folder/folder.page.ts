@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { StoreService } from '../services/store.service';
+import { GeofenceInterface } from '../models/geofence.interface';
 
 @Component({
   selector: 'app-folder',
@@ -7,12 +9,24 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./folder.page.scss'],
 })
 export class FolderPage implements OnInit {
-  public folder: string;
 
-  constructor(private activatedRoute: ActivatedRoute) { }
+  fences: GeofenceInterface[]=[];
+
+  constructor(private store: StoreService) { }
 
   ngOnInit() {
-    this.folder = this.activatedRoute.snapshot.paramMap.get('id');
+    this.store.restore();
+    this.fences = this.store.getItems();
   }
 
+  getTransition(transition: number): string{
+    switch(transition){
+      case 1:
+        return 'entering region';
+      case 2:
+        return 'exiting region';
+      case 3:
+        return 'entering or exiting region';
+    }
+  }
 }

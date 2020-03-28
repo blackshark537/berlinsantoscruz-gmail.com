@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button [routerLink]="['']">
+        <ion-icon [ios]="'arrow-back-outline'" [md]="'arrow-back-sharp'"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Geofence</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="save()">Save</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-input [(ngModel)]="data.notification.text" placeholder="Put notification text here. Example: Buy a milk">
+      </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        When you?
+      </ion-label>
+      <ion-select (ionChange)="onSelect($event.detail.value)" value="{{data.transitionType}}" okText="Okay"
+        cancelText="Dismiss" slot="end">
+        <ion-select-option value="1">Enter Region</ion-select-option>
+        <ion-select-option value="2">Exit Region</ion-select-option>
+        <ion-select-option value="3">Enter or Exit Region</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <h5>Radius</h5>
+      <ion-range min="50" [max]="5000" dualKnobs="false" pin="false" snaps="false" step="3" ticks="false"
+        [(ngModel)]="data.radius" (ionChange)="setLayer()"></ion-range>
+      <h5>{{data.radius >= 1000? roundMeters() + 'Km' : data.radius + 'm'}}</h5>
+    </ion-item>
+  </ion-list>
+
+  <div *ngIf="map" style="height: 65vh;" leaflet (leafletClick)="onSetMarket($event)" [(leafletCenter)]="center"
+    [leafletOptions]="options">
+    <div *ngFor="let l of layers" [leafletLayer]="l"></div>
+  </div>
+</ion-content>
