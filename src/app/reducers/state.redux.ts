@@ -2,7 +2,7 @@ import { Action, createReducer, on} from '@ngrx/store';
 import * as stateAction from '../actions/state.actions';
 import { GeofenceInterface } from '../models/geofence.interface';
 
-const initial_state: GeofenceInterface[] = [];
+const initial_state: GeofenceInterface[] = JSON.parse(localStorage.getItem('Fences')) || [];
 
 const stateReducer = createReducer(initial_state,
     //get all
@@ -17,6 +17,10 @@ const stateReducer = createReducer(initial_state,
     //remove one
     on(stateAction.delFence, (state, {index}) => {
         return [...state.slice(0, index), ...state.slice(index +1)];
+    }),
+    on(stateAction.onExit, state =>{
+        localStorage.setItem('Fences', JSON.stringify(state));
+        return state;
     })
 )
 

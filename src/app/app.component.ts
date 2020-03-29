@@ -1,9 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-
+import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { GeolocationService } from './services/geolocation.service';
+import { AppState } from './models/app.state';
+import * as Actions from './actions/state.actions';
 
 @Component({
   selector: 'app-root',
@@ -15,21 +17,6 @@ export class AppComponent implements OnInit {
   public selectedIndex = 0;
   public appPages = [
     {
-      title: 'Add Fixture',
-      url: '/folder/Inbox',
-      icon: 'add'     
-    },
-    {
-      title: 'Remove All Geonfences',
-      url: '/folder/Outbox',
-      icon: 'trash'
-    },
-    {
-      title: 'Test Application',
-      url: '/folder/Favorites',
-      icon: 'checkmark'
-    },
-    {
       title: 'Source',
       url: '/folder/Archived',
       icon: 'code'
@@ -39,6 +26,7 @@ export class AppComponent implements OnInit {
   theme = false;
 
   constructor(
+    private store: Store<AppState>,
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
@@ -61,7 +49,11 @@ export class AppComponent implements OnInit {
     }
 
     this.geo.watchPosition();
-    //this.toggleTheme();
+    //save state bofore exit
+    addEventListener('beforeunload', ev =>{
+      ev.preventDefault();
+      this.store.dispatch(Actions.onExit());
+    });
   }
 
   action(index){

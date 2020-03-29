@@ -11,3 +11,5 @@ export const editfence = createAction('[ GEOFENCES ] edit fence', props<pickFenc
 
 export const monitor = createAction('[POSITION] Monitor');
 export const updatePosition = createAction('[POSITION] Update', props<coords>());
+
+export const onExit = createAction('[App] before exit');
