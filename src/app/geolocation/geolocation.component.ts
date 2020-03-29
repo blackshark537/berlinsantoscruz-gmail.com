@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { tileLayer, latLng, circle, marker } from 'leaflet';
-import { GeofenceInterface } from '../models/geofence.interface';
-import { GeolocationService } from '../services/geolocation.service';
+import { tileLayer, latLng, circle, marker, MapOptions } from 'leaflet';
+import { GeofenceInterface, coords } from '../models/geofence.interface';
+//import { GeolocationService } from '../services/geolocation.service';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from '../models/app.state';
@@ -15,20 +15,32 @@ import * as Actions from '../actions/state.actions';
 export class GeolocationComponent implements OnInit {
 
   data: GeofenceInterface;
+  myPosition: coords;
   layers;
-  options;
+  layersControl;
+  options: MapOptions = {
+    layers: [
+      tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '...' })
+    ],
+    zoom: 13,
+    center: null
+  };
   map: boolean;
   center;
   index: number;
   edit: boolean;
   
   constructor(
-    private geo: GeolocationService,
     private router: Router,
     private store: Store<AppState>
     ) { }
 
   async ngOnInit() {
+    this.myPosition = {
+      accuracy: 0,
+      latitude: 0,
+      longitude: 0
+    }
 
     await this.store.select('fence').subscribe( async resp => {
       this.index = resp.index;
@@ -53,26 +65,38 @@ export class GeolocationComponent implements OnInit {
 
     if (!this.edit) {
       // get the current position
-      await this.geo.getLocation().then(resp => {
-        this.data.latitude = resp.coords.latitude;
-        this.data.longitude = resp.coords.longitude;
-      }).catch(error => alert(error.message));
+      this.store.select('Position').subscribe(coords => {
+        this.myPosition.latitude = coords.latitude;
+        this.myPosition.longitude = coords.longitude;
+        this.options.center = latLng(this.myPosition.latitude, this.myPosition.longitude)
+      });
+    }else {
+      this.options.center = latLng(this.data.latitude, this.data.longitude)
     }
 
     // leaflet options
-    this.options = {
-      layers: [
-        tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '...' })
-      ],
-      zoom: 13,
-      center: latLng(this.data.latitude, this.data.longitude)
-    };
+    this.options
 
+    //add layers control
+    this.addLayersControl();
     // set the radius and the market position
-    this.setLayer();
+    //this.setLayer();
 
     // delay map view
     setTimeout(() => this.map = true, 500);
+  }
+
+  addLayersControl(): void{
+    this.layersControl = {
+      baseLayers: {
+          'Open Street Map': tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' }),
+          //'Open Cycle Map': tileLayer('http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' })
+      },
+      overlays: {
+          //'See Position': circle([this.data.latitude, this.data.longitude], { radius: this.data.radius }),
+          'See my position'  : marker([this.myPosition.latitude, this.myPosition.longitude])
+      }
+    }
   }
 
   // refresh the market and circle
@@ -85,10 +109,12 @@ export class GeolocationComponent implements OnInit {
 
   //set new position
   onSetMarket(evt): void{
-    this.data.latitude = evt.latlng.lat;
-    this.data.longitude = evt.latlng.lng
-    this.center = evt.latLng
-    this.setLayer();
+    if(!this.edit){
+      this.data.latitude = evt.latlng.lat;
+      this.data.longitude = evt.latlng.lng
+      this.center = evt.latLng
+      this.setLayer();
+    }
   }
 
   // set transition type

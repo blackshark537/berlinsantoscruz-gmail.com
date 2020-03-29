@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { StoreService } from './services/store.service';
+import { GeolocationService } from './services/geolocation.service';
 
 @Component({
   selector: 'app-root',
@@ -11,6 +11,7 @@ import { StoreService } from './services/store.service';
   styleUrls: ['app.component.scss']
 })
 export class AppComponent implements OnInit {
+
   public selectedIndex = 0;
   public appPages = [
     {
@@ -35,11 +36,13 @@ export class AppComponent implements OnInit {
     },
   ];
 
+  theme = false;
+
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private store: StoreService
+    private geo: GeolocationService
   ) {
     this.initializeApp();
   }
@@ -56,6 +59,9 @@ export class AppComponent implements OnInit {
     if (path !== undefined) {
       this.selectedIndex = this.appPages.findIndex(page => page.title.toLowerCase() === path.toLowerCase());
     }
+
+    this.geo.watchPosition();
+    //this.toggleTheme();
   }
 
   action(index){
@@ -86,4 +92,10 @@ export class AppComponent implements OnInit {
     //this.store.restore();
     console.log('addAll');
   }
+
+  toggleTheme() {
+    this.theme = !this.theme;
+    document.body.classList.toggle('dark');
+  }
+  
 }

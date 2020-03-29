@@ -22,12 +22,13 @@ export class FolderPage implements OnInit {
 
   async ngOnInit() {
     this.fences$ = this.store.select('Fences');
-    this.store.select('Position').subscribe(resp => {
-      console.log(resp.coords);
+    this.store.select('Position').subscribe(coords => {
+      this.fences$.subscribe(fences =>{
+        fences.map(val =>{
+          console.log('calculate the distance and compare it with radius');
+        });
+      });
     });
-
-    this.store.dispatch(actions.monitor());
-
   }
 
   getTransition(transition: number): string{

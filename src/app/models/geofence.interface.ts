@@ -16,15 +16,19 @@ interface notification{
 
 export interface PositionInterface {
     // The GPS coordinates along with the accuracy of the data
-    coords?: cords;
+    coords?: coords;
     // Creation timestamp for coords
     timestamp: number;
 }
 
-interface cords{
+export interface coords{
     latitude: number;
     longitude: number;
     accuracy: number;
+    altitudeAccuracy?: number;
+    altitude?: number;
+    speed?: number;
+    heading?: number;
 }
 
 export interface pickFence{

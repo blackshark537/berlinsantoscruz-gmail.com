@@ -23,13 +23,11 @@ export class GeolocationService {
   }
 
   watchPosition() {
-    const wait = Geolocation.watchPosition({}, (position, err) => {
+    const wait = Geolocation.watchPosition({}, async(position, err) => {
       //dispatch a action
-      if(err){
-        alert(err);
-      } else {
-        this.store.dispatch(Actions.updatePosition(position));  
-      }
+      if(err) alert('Please turn GPS on')
+      let {longitude, latitude, accuracy} = position.coords;
+      await this.store.dispatch(Actions.updatePosition({longitude, latitude, accuracy}));
     });
   }
 

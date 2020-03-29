@@ -13,6 +13,11 @@
               <ion-label>{{ p.title }}</ion-label>
             </ion-item>
           </ion-menu-toggle>
+          <ion-item>
+            <ion-toggle (ionChange)="toggleTheme()"></ion-toggle>
+            <ion-label style="margin-left: 12px;"> {{ theme? ' Dark': ' Light'}} theme</ion-label>
+          </ion-item>
+
         </ion-list>
 
       </ion-content>

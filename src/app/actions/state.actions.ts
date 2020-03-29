@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { GeofenceInterface, PositionInterface, pickFence } from '../models/geofence.interface';
+import { GeofenceInterface, PositionInterface, pickFence, coords } from '../models/geofence.interface';
 
 export const getFences = createAction('[ GEOFENCES ] get all fences');
 export const addFence  = createAction('[ GEOFENCES ] add new fence', props<GeofenceInterface>());
@@ -10,4 +10,4 @@ export const newfence = createAction('[ GEOFENCES ] new fence', props<{edit: boo
 export const editfence = createAction('[ GEOFENCES ] edit fence', props<pickFence>());
 
 export const monitor = createAction('[POSITION] Monitor');
-export const updatePosition = createAction('[POSITION] Update', props<PositionInterface>());
+export const updatePosition = createAction('[POSITION] Update', props<coords>());

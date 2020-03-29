@@ -39,7 +39,8 @@
   </ion-list>
 
   <div *ngIf="map" style="height: 65vh;" leaflet (leafletClick)="onSetMarket($event)" [(leafletCenter)]="center"
-    [leafletOptions]="options">
+    [leafletOptions]="options"
+    [leafletLayersControl]="layersControl">>
     <div *ngFor="let l of layers" [leafletLayer]="l"></div>
   </div>
 </ion-content>
