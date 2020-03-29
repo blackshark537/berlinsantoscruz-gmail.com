@@ -12,10 +12,6 @@ const routes: Routes = [
   {
     path: 'geolocation',
     component: GeolocationComponent
-  },
-  {
-    path: 'geolocation/:id',
-    component: GeolocationComponent
   }
 ];
 

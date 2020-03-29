@@ -9,6 +9,14 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from 'src/environments/environment';
+import { monitorEffect } from './effects/monitor.effect';
+import { StateReducer } from './reducers/state.redux';
+import { fenceToEditReducer } from './reducers/editFence.redux';
+import { positionRedux } from './reducers/position.redux';
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,6 +26,16 @@ import { AppRoutingModule } from './app-routing.module';
     BrowserModule,
     IonicModule.forRoot(),
     LeafletModule.forRoot(),
+    StoreModule.forRoot({
+      Fences: StateReducer,
+      fence: fenceToEditReducer,
+      Position: positionRedux
+    }),
+    EffectsModule.forRoot([monitorEffect]),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: environment.production
+    }),
     AppRoutingModule
   ],
   providers: [

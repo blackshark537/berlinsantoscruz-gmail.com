@@ -10,12 +10,13 @@
 <ion-content>
 
   <ion-list>
-    <ion-item *ngIf="fences.length ===0">
+    <!-- <ion-item>
       <ion-label>
         <h3 >There are no geofences yet.</h3>
       </ion-label>
-    </ion-item>
-    <ion-item *ngFor="let fence of fences; index as i;" style="cursor: pointer;" [routerLink]="['geolocation', i]">
+    </ion-item> -->
+    <ion-item *ngFor="let fence of fences$ | async ; index as i;"
+     style="cursor: pointer;" (click)="editOne(fence, i)">
       <ion-label>
         <h3 >{{fence.notification.text}}</h3>
         <p>When {{getTransition(fence.transitionType)}} within {{fence.radius}}m</p>
@@ -24,7 +25,7 @@
   </ion-list>
 
   <ion-fab vertical="bottom" horizontal="end" >
-    <ion-fab-button [routerLink]="['geolocation']">
+    <ion-fab-button (click)="newOne()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>

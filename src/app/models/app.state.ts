@@ -1,3 +1,7 @@
+import { GeofenceInterface, pickFence, PositionInterface } from './geofence.interface';
+
 export interface AppState{
-    geofence: any
+    Fences: GeofenceInterface[];
+    fence: pickFence;
+    Position: PositionInterface;
 }

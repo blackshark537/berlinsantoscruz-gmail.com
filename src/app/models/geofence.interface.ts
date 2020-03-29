@@ -8,18 +8,27 @@ export interface GeofenceInterface{
 }
 
 interface notification{
-    text: string;
+    id?:             number; //any unique ID
+    title?:           string; //notification title
+    text:            string; //notification body
+    openAppOnClick?: boolean; //open app when notification is tapped
 }
 
 export interface PositionInterface {
     // The GPS coordinates along with the accuracy of the data
-    coords : cords;
+    coords?: cords;
     // Creation timestamp for coords
-    timestamp : number;
+    timestamp: number;
 }
 
 interface cords{
     latitude: number;
     longitude: number;
     accuracy: number;
+}
+
+export interface pickFence{
+    index?: number;
+    edit: boolean;
+    fence?: GeofenceInterface;
 }

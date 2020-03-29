@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { StoreService } from '../services/store.service';
 import { GeofenceInterface } from '../models/geofence.interface';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { AppState } from '../models/app.state';
+import * as actions from '../actions/state.actions';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-folder',
@@ -10,13 +13,21 @@ import { GeofenceInterface } from '../models/geofence.interface';
 })
 export class FolderPage implements OnInit {
 
-  fences: GeofenceInterface[]=[];
+  fences$: Observable<GeofenceInterface[]>;
 
-  constructor(private store: StoreService) { }
+  constructor( 
+    private store: Store<AppState>,
+    private router: Router
+  ) { }
 
-  ngOnInit() {
-    this.store.restore();
-    this.fences = this.store.getItems();
+  async ngOnInit() {
+    this.fences$ = this.store.select('Fences');
+    this.store.select('Position').subscribe(resp => {
+      console.log(resp.coords);
+    });
+
+    this.store.dispatch(actions.monitor());
+
   }
 
   getTransition(transition: number): string{
@@ -28,5 +39,19 @@ export class FolderPage implements OnInit {
       case 3:
         return 'entering or exiting region';
     }
+  }
+
+  newOne(){
+   this.store.dispatch(actions.newfence({edit: false}));
+   this.goToGeo();
+  }
+
+  editOne(fence, index){
+    this.store.dispatch(actions.editfence({edit: true, index, fence}));
+    this.goToGeo();
+  }
+
+  goToGeo(){
+    this.router.navigate(['app/geolocation']);
   }
 }
