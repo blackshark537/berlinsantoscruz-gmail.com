@@ -23,7 +23,8 @@ export class GeolocationService {
   }
 
   watchPosition() {
-    const wait = Geolocation.watchPosition({}, async(position, err) => {
+    const wait = Geolocation.watchPosition({
+    }, async(position, err) => {
       //dispatch a action
       if(err) alert('Please turn GPS on')
       let {longitude, latitude, accuracy} = position.coords;
@@ -36,7 +37,7 @@ export class GeolocationService {
       let monitor: monitor = {};
       monitor.callbackID = await Geolocation.watchPosition({}, (position, error)=>{
         if(error) reject(error);
-        console.log('Monitor ->',position);
+        //console.log('Monitor ->',position);
         monitor.position = position;
       });
       resolve(monitor);

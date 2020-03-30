@@ -15,6 +15,8 @@ import { environment } from 'src/environments/environment';
 import { StateReducer } from './reducers/state.redux';
 import { fenceToEditReducer } from './reducers/editFence.redux';
 import { positionRedux } from './reducers/position.redux';
+import { ServiceWorkerModule } from '@angular/service-worker';
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -33,7 +35,8 @@ import { positionRedux } from './reducers/position.redux';
       maxAge: 25,
       logOnly: environment.production
     }),
-    AppRoutingModule
+    AppRoutingModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     StatusBar,

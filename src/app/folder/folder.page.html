@@ -18,8 +18,9 @@
     <ion-item *ngFor="let fence of fences$ | async ; index as i;"
      style="cursor: pointer;">
       <ion-label (click)="editOne(fence, i)">
-        <h3 class="{{ (fence.radius*0.001) >= distance(fence.latitude, fence.longitude, coords.latitude, coords.longitude)? 'danger' : ''}}">{{fence.notification.text}}</h3>
-        <p *ngIf="(fence.radius*0.001) >= distance(fence.latitude, fence.longitude, coords.latitude, coords.longitude); else elseBlock;">
+        <h3>{{fence.notification.text}}</h3>
+        <p *ngIf="(fence.radius*0.001) >= distance(fence.latitude, fence.longitude, coords.latitude, coords.longitude); else elseBlock;"
+          class="{{ (fence.radius*0.001) >= distance(fence.latitude, fence.longitude, coords.latitude, coords.longitude)? 'danger-red' : ''}}">
           You are inside of {{fence.notification.text}}
         </p>
         <ng-template #elseBlock>

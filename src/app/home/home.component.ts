@@ -32,7 +32,7 @@ export class HomeComponent implements OnInit {
 
     this.options = {
       layers: [
-        tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '...' })
+        tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' })
       ],
       zoom: 13,
       center: null
@@ -47,7 +47,7 @@ export class HomeComponent implements OnInit {
     await this.store.select('Fences').subscribe(fences =>{
       fences.map(fence =>{
          this.layers.push(
-          circle([fence.latitude, fence.longitude], { radius: fence.radius }),
+          circle([fence.latitude, fence.longitude], { radius: fence.radius }).bindPopup(`<b>${fence.notification.title}</b><p>${fence.notification.text}</p>`),
            marker([fence.latitude, fence.longitude])
           )
       });
@@ -63,11 +63,15 @@ export class HomeComponent implements OnInit {
     this.layers.push(marker([this.myPosition.latitude, this.myPosition.longitude], {
       autoPan: true,
       icon: icon({
-        iconSize: [ 31, 41 ],
-        iconAnchor: [ 13, 41 ],
-        iconUrl: 'assets/marker-96.png',
-        shadowUrl: 'assets/marker-shadow.png'
+        iconSize: [ 18, 18 ],
+        //iconAnchor: [ 10, 10],
+        iconUrl: 'assets/marker.png',
+        //shadowUrl: 'assets/marker-shadow.png'
      })
-    }));
+    }), circle([this.myPosition.latitude, this.myPosition.longitude], { radius: 20}).setStyle({
+      fillColor: '#f21818',
+      color: '#f21818'
+    })
+    );
   }
 }
