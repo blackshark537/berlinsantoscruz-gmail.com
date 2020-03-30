@@ -7,6 +7,7 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 import { FolderPageRoutingModule } from './folder-routing.module';
 import { GeolocationComponent } from '../geolocation/geolocation.component';
+import { HomeComponent } from '../home/home.component';
 import { FolderPage } from './folder.page';
 
 @NgModule({
@@ -19,6 +20,6 @@ import { FolderPage } from './folder.page';
     LeafletModule,
     FolderPageRoutingModule
   ],
-  declarations: [FolderPage, GeolocationComponent]
+  declarations: [FolderPage, GeolocationComponent, HomeComponent]
 })
 export class FolderPageModule {}

@@ -1,0 +1,25 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Home</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="map" style="height: 80vh;" leaflet [(leafletCenter)]="center"
+    [leafletOptions]="options" [leafletLayersControl]="layersControl">
+    <div *ngFor="let l of layers" [leafletLayer]="l"></div>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-item>
+    <small>Develope by Blackshark Opensource using the following technologies </small>
+    <ion-icon style="margin-left: 9px;" name="logo-npm"></ion-icon>
+    <ion-icon name="logo-nodejs"></ion-icon>
+    <ion-icon name="logo-javascript"></ion-icon>
+    <ion-icon name="logo-angular"></ion-icon>
+  </ion-item>
+</ion-footer>

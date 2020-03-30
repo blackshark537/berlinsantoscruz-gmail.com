@@ -16,11 +16,37 @@
       </ion-label>
     </ion-item> -->
     <ion-item *ngFor="let fence of fences$ | async ; index as i;"
-     style="cursor: pointer;" (click)="editOne(fence, i)">
-      <ion-label>
-        <h3 >{{fence.notification.text}}</h3>
+     style="cursor: pointer;">
+      <ion-label (click)="editOne(fence, i)">
+        <h3 class="{{ (fence.radius*0.001) >= distance(fence.latitude, fence.longitude, coords.latitude, coords.longitude)? 'danger' : ''}}">{{fence.notification.text}}</h3>
+        <p *ngIf="(fence.radius*0.001) >= distance(fence.latitude, fence.longitude, coords.latitude, coords.longitude); else elseBlock;">
+          You are inside of {{fence.notification.text}}
+        </p>
+        <ng-template #elseBlock>
+          <p>you are at {{ distance(fence.latitude, fence.longitude, coords.latitude, coords.longitude) }} km from the {{fence.notification.text}}</p>
+        </ng-template>
         <p>When {{getTransition(fence.transitionType)}} within {{fence.radius}}m</p>
       </ion-label>
+      <ion-icon  *ngIf="(fence.radius*0.001) >= distance(fence.latitude, fence.longitude, coords.latitude, coords.longitude);"
+      slot="start" color="danger" [ios]="'alert-circle-outline'" [md]="'alert-circle-sharp'"></ion-icon>
+      <ion-fab vertical="undefined" horizontal="end">
+        <ion-fab-button color="dark">
+          <ion-icon name="chevron-back-outline"></ion-icon>
+        </ion-fab-button>
+      
+        <!-- <ion-fab-list side="top">
+          <ion-fab-button>Facebook</ion-fab-button>
+          <ion-fab-button>Twitter</ion-fab-button>
+          <ion-fab-button>Youtube</ion-fab-button>
+        </ion-fab-list> -->
+      
+        <ion-fab-list side="start">
+          <ion-fab-button color="danger" (click)="delete(i)">
+            <ion-icon name="trash"></ion-icon>  
+          </ion-fab-button>
+        </ion-fab-list>
+      
+      </ion-fab>
     </ion-item>
   </ion-list>
 

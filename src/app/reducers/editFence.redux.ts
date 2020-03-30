@@ -8,7 +8,8 @@ const InitialState: pickFence = {
 
 const editFenceReducer = createReducer(InitialState, 
     on(stateAction.editfence, (state, fence) => ({...fence})),
-    on(stateAction.newfence, (state, fence) => ({...fence}))
+    on(stateAction.newfence, (state, fence) => ({...fence})),
+    on(stateAction.clearAll, state => ({edit: false}))
 );
 
 export function fenceToEditReducer(state: pickFence, actions: Action){

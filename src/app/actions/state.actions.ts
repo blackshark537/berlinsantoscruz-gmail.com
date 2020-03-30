@@ -6,8 +6,9 @@ export const addFence  = createAction('[ GEOFENCES ] add new fence', props<Geofe
 export const delFence  = createAction('[ GEOFENCES ] del one fence', props<{index: number}>());
 export const patchFence = createAction('[ GEOFENCES ] patch one fence', props<{fence: GeofenceInterface, index: number}>());
 
-export const newfence = createAction('[ GEOFENCES ] new fence', props<{edit: boolean}>());
-export const editfence = createAction('[ GEOFENCES ] edit fence', props<pickFence>());
+export const newfence = createAction('[ GEOFENCE ] new fence', props<{edit: boolean}>());
+export const editfence = createAction('[ GEOFENCE ] edit fence', props<pickFence>());
+export const clearAll = createAction('[ GEOFENCE ] clear fence')
 
 export const monitor = createAction('[POSITION] Monitor');
 export const updatePosition = createAction('[POSITION] Update', props<coords>());

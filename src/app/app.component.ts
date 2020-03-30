@@ -17,10 +17,20 @@ export class AppComponent implements OnInit {
   public selectedIndex = 0;
   public appPages = [
     {
-      title: 'Source',
-      url: '/folder/Archived',
-      icon: 'code'
+      title: 'Home',
+      url: '/app/home',
+      icon: 'home'
     },
+    {
+      title: 'Locations',
+      url: '/app/fences',
+      icon: 'locate'
+    },
+/*     {
+      title: 'Source',
+      url: 'https://github.com/blackshark537/geofence',
+      icon: 'code'
+    }, */
   ];
 
   theme = false;

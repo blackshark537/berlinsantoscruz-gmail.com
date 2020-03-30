@@ -1,9 +1,10 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-button [routerLink]="['']">
+      <!-- <ion-button [routerLink]="['/app/home']">
         <ion-icon [ios]="'arrow-back-outline'" [md]="'arrow-back-sharp'"></ion-icon>
-      </ion-button>
+      </ion-button> -->
+      <ion-back-button></ion-back-button>
     </ion-buttons>
     <ion-title>Geofence</ion-title>
     <ion-buttons slot="end">
@@ -40,7 +41,7 @@
 
   <div *ngIf="map" style="height: 65vh;" leaflet (leafletClick)="onSetMarket($event)" [(leafletCenter)]="center"
     [leafletOptions]="options"
-    [leafletLayersControl]="layersControl">>
+    [leafletLayersControl]="layersControl">
     <div *ngFor="let l of layers" [leafletLayer]="l"></div>
   </div>
 </ion-content>
