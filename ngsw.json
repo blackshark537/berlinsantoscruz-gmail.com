@@ -1,10 +1,10 @@
 {
   "configVersion": 1,
-  "timestamp": 1585591958593,
+  "timestamp": 1585610325265,
   "index": "geofence/index.html",
   "assetGroups": [
     {
-      "name": "app",
+      "name": "Geofence",
       "installMode": "prefetch",
       "updateMode": "prefetch",
       "urls": [
@@ -20,20 +20,20 @@
         "geofence/6-es5.815d7d137fc08c828fb5.js",
         "geofence/7-es2015.f53da072ebda922350a7.js",
         "geofence/7-es5.f53da072ebda922350a7.js",
-        "geofence/92-es2015.455a1a5f5c5418b583c0.js",
-        "geofence/92-es5.455a1a5f5c5418b583c0.js",
+        "geofence/92-es2015.39d3a392837c36091b24.js",
+        "geofence/92-es5.39d3a392837c36091b24.js",
         "geofence/93-es2015.bd66884fe585c2b1c956.js",
         "geofence/93-es5.bd66884fe585c2b1c956.js",
         "geofence/common-es2015.4857dd7367a60053514e.js",
         "geofence/common-es5.4857dd7367a60053514e.js",
         "geofence/index.html",
-        "geofence/main-es2015.779486c330c3a258901b.js",
-        "geofence/main-es5.779486c330c3a258901b.js",
+        "geofence/main-es2015.334edf7e7f3ade2028c8.js",
+        "geofence/main-es5.334edf7e7f3ade2028c8.js",
         "geofence/manifest.webmanifest",
         "geofence/polyfills-es2015.c1f142d23713235da53a.js",
         "geofence/polyfills-es5.3f81798dab399e8c607f.js",
-        "geofence/runtime-es2015.4e03d663ed3422e90617.js",
-        "geofence/runtime-es5.4e03d663ed3422e90617.js",
+        "geofence/runtime-es2015.2169c680142810bb9eb0.js",
+        "geofence/runtime-es5.2169c680142810bb9eb0.js",
         "geofence/stencil-ion-action-sheet-ios-entry-js-es2015.8a8a593f8486c2d30d00.js",
         "geofence/stencil-ion-action-sheet-ios-entry-js-es5.8a8a593f8486c2d30d00.js",
         "geofence/stencil-ion-action-sheet-md-entry-js-es2015.2698a9c5259ee2341e83.js",
@@ -196,7 +196,9 @@
         "geofence/stencil-polyfills-dom-es5.86b2a2ce1a37e48a57fe.js",
         "geofence/styles.f68afb23f5329d38e41d.css"
       ],
-      "patterns": []
+      "patterns": [
+        "https:\\/\\/unpkg\\.com\\/leaflet@1\\.6\\.0\\/dist\\/.*"
+      ]
     },
     {
       "name": "assets",
@@ -225,7 +227,19 @@
       "patterns": []
     }
   ],
-  "dataGroups": [],
+  "dataGroups": [
+    {
+      "name": "leaflet maps",
+      "patterns": [
+        "https:\\/\\/{s}\\.tile\\.openstreetmap\\.org\\/{z}\\/{x}\\/{y}\\.png"
+      ],
+      "strategy": "freshness",
+      "maxSize": 20,
+      "maxAge": 7200000,
+      "timeoutMs": 5000,
+      "version": 1
+    }
+  ],
   "hashTable": {
     "geofence/2-es2015.7b4980043016ec1463cd.js": "0bab15cb0a18df4ac0aa1f0425c7a583d9fbd636",
     "geofence/2-es5.7b4980043016ec1463cd.js": "eea45310c1ace02e1beeeb3a07eeef9e48af92e1",
@@ -239,8 +253,8 @@
     "geofence/6-es5.815d7d137fc08c828fb5.js": "1bb0ecbe14ca36d3572d494a722f8a8d7a98f3b0",
     "geofence/7-es2015.f53da072ebda922350a7.js": "0d9ea1344aa2468fccfcdbf1da47fc369a0e7b31",
     "geofence/7-es5.f53da072ebda922350a7.js": "04c24a2516a883e0b2f1b7f842331b3ace502dda",
-    "geofence/92-es2015.455a1a5f5c5418b583c0.js": "ee632169bb48fabfc63eadcb132955120e5b5978",
-    "geofence/92-es5.455a1a5f5c5418b583c0.js": "d777b9fffdc013e0b6f7eb65a06459e579cd8d69",
+    "geofence/92-es2015.39d3a392837c36091b24.js": "041573e7cac16b18499127dee447b0294350f41f",
+    "geofence/92-es5.39d3a392837c36091b24.js": "38e78cfb623b330e2176016a3e89bc419164a7ab",
     "geofence/93-es2015.bd66884fe585c2b1c956.js": "89547bf3cdcd43cc5475b76ddfb15def6c814e2e",
     "geofence/93-es5.bd66884fe585c2b1c956.js": "a994124156f7f240c42d172688c7650865cf294b",
     "geofence/assets/icon/favicon.png": "7798b8e0eb61d7375c245af78bbf5c916932bf13",
@@ -263,14 +277,14 @@
     "geofence/assets/shapes.svg": "5413e95adabcb2cb639970051f55e0ddb64ace53",
     "geofence/common-es2015.4857dd7367a60053514e.js": "97beb6083a04a4b16efa8129de66274ca8b5265c",
     "geofence/common-es5.4857dd7367a60053514e.js": "b9d6b9480836a24744716205c5c2b4589d9f58e4",
-    "geofence/index.html": "634fc6154e433c3753dd1f27d3444e9dc3696357",
-    "geofence/main-es2015.779486c330c3a258901b.js": "97a27bb4a619353509a4116194aca8d6d680b44d",
-    "geofence/main-es5.779486c330c3a258901b.js": "7b81ff801b53f0dc1bc20f0816640b2a785824b6",
-    "geofence/manifest.webmanifest": "0d80d341c3e3efbe9da2bd55bc5639a498b57b10",
+    "geofence/index.html": "94f9e53fcb2eec433be4fcfc0f4d4ee18024570c",
+    "geofence/main-es2015.334edf7e7f3ade2028c8.js": "4c89ad9726279d0a8906327bf97250f917380ee4",
+    "geofence/main-es5.334edf7e7f3ade2028c8.js": "550c7a6d55c4c4314faeb807f8c047fddb86c57d",
+    "geofence/manifest.webmanifest": "c919bdf131e169a4b6ef147000decb0cc01b8383",
     "geofence/polyfills-es2015.c1f142d23713235da53a.js": "d09f5d54be882e501e006c5c097486eef3dbb188",
     "geofence/polyfills-es5.3f81798dab399e8c607f.js": "c1691e038ec6ce2ed635fe4ad19bc62a4d7d8598",
-    "geofence/runtime-es2015.4e03d663ed3422e90617.js": "33257cc9857432b9c2ff82aae90a66260d6757ff",
-    "geofence/runtime-es5.4e03d663ed3422e90617.js": "69e17445bd6f4b3d429f43ba9a91451a9ab499f3",
+    "geofence/runtime-es2015.2169c680142810bb9eb0.js": "64e23b23fb199e5d9d668501fce3d52e89515cd8",
+    "geofence/runtime-es5.2169c680142810bb9eb0.js": "dbd8038ca6fdf607bac9fcfbe21d24981c8df66e",
     "geofence/stencil-ion-action-sheet-ios-entry-js-es2015.8a8a593f8486c2d30d00.js": "ffa6f405770d6268f17e6463d65c117f868dfc35",
     "geofence/stencil-ion-action-sheet-ios-entry-js-es5.8a8a593f8486c2d30d00.js": "bf33ba31cf1a884a1a13ead07470c1d83b84ba9e",
     "geofence/stencil-ion-action-sheet-md-entry-js-es2015.2698a9c5259ee2341e83.js": "90de12d0e410a3c47166b6d7141df424684212d4",
