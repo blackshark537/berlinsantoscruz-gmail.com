@@ -56,7 +56,7 @@ export class GeolocationComponent implements OnInit, DoCheck {
       layers: [
         tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' })
       ],
-      zoom: 13,
+      zoom: null,
       center: null
     };
 
@@ -83,15 +83,19 @@ export class GeolocationComponent implements OnInit, DoCheck {
       }
     });
 
+    await this.store.select('Position').subscribe(coords => {
+      this.myPosition.latitude = coords.latitude;
+      this.myPosition.longitude = coords.longitude;
+      this.myPosition.accuracy = coords.accuracy;
+    });
+
     if (this.edit) {
-      this.options.center = latLng(this.data.latitude, this.data.longitude);  
+      this.options.center = latLng(this.data.latitude, this.data.longitude);
+      this.options.zoom = 8;  
     }else {
-      // get the current position
-      await this.store.select('Position').subscribe(coords => {
-        this.myPosition.latitude = coords.latitude;
-        this.myPosition.longitude = coords.longitude;
-        this.options.center = latLng(this.myPosition.latitude, this.myPosition.longitude)
-      });
+      // Center the current position
+      this.options.center = latLng(this.myPosition.latitude, this.myPosition.longitude);
+      this.options.zoom = 13;
     }
 
     // leaflet options
@@ -106,8 +110,8 @@ export class GeolocationComponent implements OnInit, DoCheck {
     // delay map view
     setTimeout(() => {
       this.map = true;
-      this.setLayer();
-    }, 500);
+      this.setLayers();
+    }, 1000);
   }
 
   ngDoCheck(){
@@ -130,12 +134,11 @@ export class GeolocationComponent implements OnInit, DoCheck {
   }
 
   // refresh the market and circle
-  setLayer(): void{
-    console.log('set Layer');
-    
+  setLayers(): void{
+
     this.layers = [
       circle([this.data.latitude, this.data.longitude], { radius: this.data.radius }),
-      marker([this.data.latitude, this.data.longitude]),
+      //marker([this.data.latitude, this.data.longitude]),
       marker([this.myPosition.latitude, this.myPosition.longitude], {
         autoPan: true,
         icon: icon({
@@ -144,10 +147,11 @@ export class GeolocationComponent implements OnInit, DoCheck {
           iconUrl: 'assets/marker.png',
           //shadowUrl: 'assets/marker-shadow.png'
        })
-      }), circle([this.myPosition.latitude, this.myPosition.longitude], { radius: 20}).setStyle({
-      fillColor: '#f21818',
-      color: '#f21818'
-    })
+      }), circle([this.myPosition.latitude, this.myPosition.longitude], { radius: this.myPosition.accuracy})
+      .setStyle({
+        fillColor: '#f21818',
+        color: '#f21818'
+      })
     ];
   }
 
@@ -157,7 +161,7 @@ export class GeolocationComponent implements OnInit, DoCheck {
       this.data.latitude = evt.latlng.lat;
       this.data.longitude = evt.latlng.lng
       this.center = evt.latLng
-      this.setLayer();
+      this.setLayers();
     }
   }
 
@@ -192,7 +196,7 @@ export class GeolocationComponent implements OnInit, DoCheck {
       this.store.dispatch(Actions.addFence(this.data));
     }
     //this.store.dispatch(Actions.initialFence())
-    this.router.navigate(['/app/home']);
+    this.router.navigate(['/app/fences']);
   }
 
   private addGeofence() {

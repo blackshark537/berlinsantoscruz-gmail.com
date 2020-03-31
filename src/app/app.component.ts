@@ -6,6 +6,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { GeolocationService } from './services/geolocation.service';
 import { AppState } from './models/app.state';
 import * as Actions from './actions/state.actions';
+import { SwUpdate } from '@angular/service-worker';
 
 @Component({
   selector: 'app-root',
@@ -33,14 +34,16 @@ export class AppComponent implements OnInit {
     }, */
   ];
 
-  theme = false;
+  theme: boolean = false;
+  update: boolean = false;
 
   constructor(
     private store: Store<AppState>,
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private geo: GeolocationService
+    private geo: GeolocationService,
+    private swUpdates: SwUpdate
   ) {
     this.initializeApp();
   }
@@ -53,6 +56,11 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    this.swUpdates.available.subscribe(evt =>{
+      this.swUpdates.activateUpdate().then(()=> document.location.reload());
+    });
+
     const path = window.location.pathname.split('folder/')[1];
     if (path !== undefined) {
       this.selectedIndex = this.appPages.findIndex(page => page.title.toLowerCase() === path.toLowerCase());

@@ -8,8 +8,9 @@
 </ion-header>
 
 <ion-content>
+  <!-- [leafletLayersControl]="layersControl" -->
   <div *ngIf="map" style="height: 80vh;" leaflet [(leafletCenter)]="center"
-    [leafletOptions]="options" [leafletLayersControl]="layersControl">
+    [leafletOptions]="options">
     <div *ngFor="let l of layers" [leafletLayer]="l"></div>
   </div>
 </ion-content>

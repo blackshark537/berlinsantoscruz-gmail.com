@@ -41,25 +41,30 @@ export class HomeComponent implements OnInit {
     await this.store.select('Position').subscribe(coords => {
       this.myPosition.latitude = coords.latitude;
       this.myPosition.longitude = coords.longitude;
+      this.myPosition.accuracy = coords.accuracy;
       this.options.center = latLng(this.myPosition.latitude, this.myPosition.longitude);
     });
 
     await this.store.select('Fences').subscribe(fences =>{
+      this.layers = [];
+      this.setUserLayer();
       fences.map(fence =>{
          this.layers.push(
-          circle([fence.latitude, fence.longitude], { radius: fence.radius }).bindPopup(`<b>${fence.notification.title}</b><p>${fence.notification.text}</p>`),
-           marker([fence.latitude, fence.longitude])
+          circle([fence.latitude, fence.longitude], { radius: fence.radius }).bindPopup(`
+            <h6><b>${fence.notification.title}</b></h6>
+            <h5>${fence.notification.text}</h5>
+          `),
+           //marker([fence.latitude, fence.longitude])
           )
       });
     });
 
     setTimeout(() => {
       this.map = true;
-      this.setLayer();
-    }, 500);
+    }, 1000);
   }
 
-  setLayer(): void{
+  setUserLayer(): void{
     this.layers.push(marker([this.myPosition.latitude, this.myPosition.longitude], {
       autoPan: true,
       icon: icon({
@@ -68,10 +73,11 @@ export class HomeComponent implements OnInit {
         iconUrl: 'assets/marker.png',
         //shadowUrl: 'assets/marker-shadow.png'
      })
-    }), circle([this.myPosition.latitude, this.myPosition.longitude], { radius: 20}).setStyle({
+    }), circle([this.myPosition.latitude, this.myPosition.longitude], { radius: this.myPosition.accuracy})
+    .setStyle({
       fillColor: '#f21818',
       color: '#f21818'
-    })
+    }).bindPopup("<h5>You are within " + this.myPosition.accuracy + " meters from the red point</h5>").openPopup()
     );
   }
 }

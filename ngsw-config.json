@@ -3,7 +3,7 @@
   "index": "/index.html",
   "assetGroups": [
     {
-      "name": "app",
+      "name": "Geofence",
       "installMode": "prefetch",
       "resources": {
         "files": [
@@ -11,7 +11,11 @@
           "/index.html",
           "/manifest.webmanifest",
           "/*.css",
-          "/*.js"
+          "/*.js",
+          "/*.map"
+        ],
+        "urls": [
+          "https://unpkg.com/leaflet@1.6.0/dist/**"
         ]
       }
     }, {
@@ -23,6 +27,18 @@
           "/assets/**",
           "/*.(eot|svg|cur|jpg|png|webp|gif|otf|ttf|woff|woff2|ani)"
         ]
+      }
+    }
+  ],
+  "dataGroups": [
+    {
+      "name": "leaflet maps",
+      "urls": ["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"],
+      "cacheConfig": {
+        "strategy": "freshness",
+        "maxAge": "2h",
+        "maxSize": 20,
+        "timeout": "5s"
       }
     }
   ]

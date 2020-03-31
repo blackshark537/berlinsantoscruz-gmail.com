@@ -33,15 +33,15 @@
     </ion-item>
     <ion-item>
       <h5>Radius</h5>
-      <ion-range min="50" [max]="5000" dualKnobs="false" pin="false" snaps="false" step="3" ticks="false"
-        [(ngModel)]="data.radius" (ionChange)="setLayer()"></ion-range>
+      <ion-range min="50" [max]="10000" dualKnobs="false" pin="false" snaps="false" step="3" ticks="false"
+        [(ngModel)]="data.radius" (ionChange)="setLayers()"></ion-range>
       <h5>{{data.radius >= 1000? roundMeters() + 'Km' : data.radius + 'm'}}</h5>
     </ion-item>
   </ion-list>
 
+  <!-- [leafletLayersControl]="layersControl" -->
   <div *ngIf="map" style="height: 65vh;" leaflet (leafletClick)="onSetMarket($event)" [(leafletCenter)]="center"
-    [leafletOptions]="options"
-    [leafletLayersControl]="layersControl">
+    [leafletOptions]="options">
     <div *ngFor="let l of layers" [leafletLayer]="l"></div>
   </div>
 </ion-content>
