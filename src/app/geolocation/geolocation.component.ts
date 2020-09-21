@@ -98,15 +98,6 @@ export class GeolocationComponent implements OnInit, DoCheck {
       this.options.zoom = 13;
     }
 
-    // leaflet options
-    //this.options
-
-    //add layers control
-    //this.addLayersControl();
-
-    // set the radius and the market position
-
-
     // delay map view
     setTimeout(() => {
       this.map = true;
@@ -116,21 +107,6 @@ export class GeolocationComponent implements OnInit, DoCheck {
 
   ngDoCheck(){
 
-  }
-
-  addLayersControl(): void{
-    this.layersControl = {
-      baseLayers: {
-          'Open Street Map': tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' }),
-          //'Open Cycle Map': tileLayer('http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' })
-      },
-      overlays: {
-          //'See Position': circle([this.data.latitude, this.data.longitude], { radius: this.data.radius }),
-          'See my position'  : marker([this.myPosition.latitude, this.myPosition.longitude], {
-            autoPan: true,
-          })
-      }
-    }
   }
 
   // refresh the market and circle

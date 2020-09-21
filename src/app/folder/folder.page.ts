@@ -30,12 +30,11 @@ export class FolderPage implements OnInit {
     this.store.select('Position').subscribe(coords => {
       this.coords = coords;
     });
-
     this.store.dispatch(actions.clearAll());
   }
 
-  distance(lat1, lon1, lat2, lon2) {
-    let R = 6371; // km (change this constant to get miles)
+  distance(lat1, lon1, lat2, lon2):number {
+    const R = 6371; //Earth radius, km (change this constant to get miles)
     let dLat = (lat2 - lat1) * Math.PI / 180;
     let dLon = (lon2 - lon1) * Math.PI / 180;
     let a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
